@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript">
+        var db = openDatabase("Bancodedados", "2.0", "Base", 2024);
+        db.transaction(function(criar){
+         criar.executeSql("CREAT TABLE users (id INTEGER PRIMARY KEY, Nome TEXT, Telefone TEXT, Endereco TEXT, Cidade TEXT)");
+        });
+
+        function salvar(){
+            var Nome = document.getElementByiId('Nome').value;
+            var Telefone = document.getElementByiId('Telefone').value;
+            var Endereco = document.getElementByiId('Endereco').value;
+            var Cidade = document.getElementByiId('Cidade').value;
+            db.transaction(function(armazenar){
+            armazenar.executeSql("INSERT INTO users (Nome, Telefone, Endereco, Cidade) VALUES (?,?,?,?), [Nome,Telefone,Endereco,Cidade]") 
+            });
+
+            
+        }
+    </script>
+</head>
+<body>       
+    <div id="form">
+        <form onsubmit="salvar()">
+            <h2 class="title">Cadastro</h2>
+            <input type="text" id="Nome" name="Nome" placeholder="Nome"><br>
+            <input type="tel" id="Telefone" name="Telefone" placeholder="Telefone"><br>
+            <input type="text" id="Endereco" name="Endereco" placeholder="Endereco"><br>
+            <input type="text" id="Cidade" name="Cidade" placeholder="Cidade"><br>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+</body>
+</html>
